@@ -1,14 +1,21 @@
 # Secure Remittance API
 
-A robust FastAPI backend built for secure user registration, wallet management, and fund transfers.
+A lightweight, robust remittance and wallet management API built with **FastAPI** and validated with automated tests using **pytest**. Developed as part of a technical portfolio demonstrating backend infrastructure and API design capabilities.
 
 ## Features
-* **User Management:** Secure registration and validation.
-* **Wallet Operations:** Automated wallet creation upon registration, balance tracking, and deposits.
-* **Transfers:** Peer-to-peer money transfers with balance checks and validation.
+- **Wallet Management:** Register users and check live wallet balances.
+- **Deposit Processing:** Securely deposit funds into specific accounts.
+- **Transfer Validation:** Handle peer-to-peer transfers with built-in validation checks (such as insufficient funds handling).
 
-## Local Setup
-1. Clone the repository:
-   ```bash
-   git clone [https://github.com/YOUR-USERNAME/secure-remittance-api.git](https://github.com/YOUR-USERNAME/secure-remittance-api.git)
-   cd secure-remittance-api
+## Tech Stack
+- **Python 3.12**
+- **FastAPI**
+- **Pytest** (for automated testing)
+- **Uvicorn** (ASGI server)
+
+## Getting Started Locally
+
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/rugarenyamasvisva/secure-remittance-api.git](https://github.com/rugarenyamasvisva/secure-remittance-api.git)
+cd secure-remittance-api
