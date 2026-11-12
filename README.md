@@ -1,47 +1,49 @@
 # Secure Remittance API
 
-A production-ready, lightweight remittance and wallet management API built with **FastAPI** in Python and thoroughly validated using automated tests with **Pytest**.
+A small backend for digital wallets, built with Python and FastAPI. Users can register, deposit money, send money to each other and see their transaction history. It is a learning and portfolio project, not a production system.
 
----
+## What it does
 
-## 1. Project Overview & Features
-This project provides a secure backend service to manage user balances, process deposits, and execute peer-to-peer monetary transfers.
+- Registers users with salted password hashing, one wallet each
+- Stores money as whole cents to avoid rounding errors
+- Supports deposits and wallet-to-wallet transfers
+- Transfers are all-or-nothing: if any step fails, nothing changes
+- Rejects bad input: negative amounts, unknown wallets, duplicate emails and transfers to the same wallet
+- Keeps a transaction history for every wallet
 
-- **Wallet Management (`POST /wallets`, `GET /wallets/{id}`):** Account creation and real-time balance retrieval.
-- **Deposit Processing (`POST /wallets/{id}/deposit`):** Securely credits funds to specified user wallets.
-- **Transfer Validation (`POST /transfers`):** Executes atomic peer-to-peer fund transfers while handling edge cases like insufficient funds.
+## Tech stack
 
----
+Python, FastAPI, SQLAlchemy, SQLite, pytest
 
-## 2. Tech Stack
-- **Framework:** FastAPI (Python 3.12)
-- **ASGI Server:** Uvicorn
-- **Testing Suite:** Pytest & HTTPX
-- **Version Control:** Git & GitHub
+## Endpoints
 
----
+| Method | Path | Purpose |
+|--------|------|---------|
+| POST | /users | Register a user and create their wallet |
+| GET | /wallets/{id} | Get a wallet balance |
+| POST | /wallets/{id}/deposit | Add money to a wallet |
+| POST | /transfers | Send money between two wallets |
+| GET | /wallets/{id}/transactions | List a wallet's transactions |
 
-## 3. How It Works Under the Hood
+Amounts are in cents, so 10000 means 100.00.
 
-### API Routing & Schema Validation (FastAPI)
-FastAPI receives incoming HTTP JSON requests, parses inputs into Python data types, runs validation, and routes requests directly to core business logic handlers.
+## Run it
 
-### Automated Test Execution (Pytest)
-`pytest` simulates incoming HTTP client requests against the API endpoints. It validates HTTP status codes (`200 OK`, `201 Created`) and verifies JSON payload schemas without needing to manually spin up an external web browser.
+Open a terminal in the remittance-api folder, then run:
 
----
+    python -m venv venv
+    venv\Scripts\activate
+    pip install -r requirements.txt
+    uvicorn main:app --reload
 
-## 4. Test Suite Execution Results
+Then open http://127.0.0.1:8000/docs to try the endpoints.
 
-All core endpoints pass automated verification checks:
+## Limitations
 
-```text
-============================== test session starts ==============================
-platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0
-rootdir: C:\Users\Dell PC\Documents\remittance-api-day1
-plugins: anyio-4.16.0
-collected 4 items
+- No login yet, so any caller can use any wallet
+- A repeated request creates a repeated transfer
+- SQLite is used for simplicity; a real service would use PostgreSQL
 
-remittance-api/test_api.py ....                                          [100%]
+## Author
 
-=============================== 4 passed in 1.92s ===============================
+Rugare Nyamasvisva, Harare, Zimbabwe
